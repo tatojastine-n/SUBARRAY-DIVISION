@@ -1,111 +1,71 @@
-#include <bits/stdc++.h>
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
 
-using namespace std;
-
-string ltrim(const string &);
-string rtrim(const string &);
-vector<string> split(const string &);
-
-/*
- * Complete the 'birthday' function below.
- *
- * The function is expected to return an INTEGER.
- * The function accepts following parameters:
- *  1. INTEGER_ARRAY s
- *  2. INTEGER d
- *  3. INTEGER m
- */
-
-int birthday(vector<int> s, int d, int m) {
-    int count = 0;
-    int n = s.size();
-    for (int i = 0; i <= n - m; i++) {
-        int sum = 0;
-        for (int j = i; j < i + m; j++) {
-            sum += s[j];
-        }
-        if (sum == d) {
-            count++;
-        }
-    }
-    return count;
-}
-
-int main()
+class Result
 {
-    ofstream fout(getenv("OUTPUT_PATH"));
 
-    string n_temp;
-    getline(cin, n_temp);
+    /*
+     * Complete the 'birthday' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY s
+     *  2. INTEGER d
+     *  3. INTEGER m
+     */
 
-    int n = stoi(ltrim(rtrim(n_temp)));
-
-    string s_temp_temp;
-    getline(cin, s_temp_temp);
-
-    vector<string> s_temp = split(rtrim(s_temp_temp));
-
-    vector<int> s(n);
-
-    for (int i = 0; i < n; i++) {
-        int s_item = stoi(s_temp[i]);
-
-        s[i] = s_item;
+    public static int birthday(List<int> s, int d, int m)
+    {
+        int count = 0;
+        for (int i = 0; i <= s.Count - m; i++)
+        {
+            int sum = 0;
+            for (int j = i; j < i + m; j++)
+            {
+                sum += s[j];
+            }
+            if (sum == d)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
-    string first_multiple_input_temp;
-    getline(cin, first_multiple_input_temp);
-
-    vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
-
-    int d = stoi(first_multiple_input[0]);
-
-    int m = stoi(first_multiple_input[1]);
-
-    int result = birthday(s, d, m);
-
-    fout << result << "\n";
-
-    fout.close();
-
-    return 0;
 }
 
-string ltrim(const string &str) {
-    string s(str);
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
 
-    s.erase(
-        s.begin(),
-        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
-    );
+        int n = Convert.ToInt32(Console.ReadLine().Trim());
 
-    return s;
-}
+        List<int> s = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(sTemp => Convert.ToInt32(sTemp)).ToList();
 
-string rtrim(const string &str) {
-    string s(str);
+        string[] firstMultipleInput = Console.ReadLine().TrimEnd().Split(' ');
 
-    s.erase(
-        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
-        s.end()
-    );
+        int d = Convert.ToInt32(firstMultipleInput[0]);
 
-    return s;
-}
+        int m = Convert.ToInt32(firstMultipleInput[1]);
 
-vector<string> split(const string &str) {
-    vector<string> tokens;
+        int result = Result.birthday(s, d, m);
 
-    string::size_type start = 0;
-    string::size_type end = 0;
+        textWriter.WriteLine(result);
 
-    while ((end = str.find(" ", start)) != string::npos) {
-        tokens.push_back(str.substr(start, end - start));
-
-        start = end + 1;
+        textWriter.Flush();
+        textWriter.Close();
     }
-
-    tokens.push_back(str.substr(start));
-
-    return tokens;
 }
